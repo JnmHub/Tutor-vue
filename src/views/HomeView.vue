@@ -8,12 +8,15 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 此页面目前用来测试
+ */
 const { showConfirm, showSuccess } = useDialogHook()
 const {success} = useMessageHook()
 const {user} = useStoreHook()
 const http = useHttpHook()
 console.log(user().role);
-
+// http.get('http://localhost:3000/user')
 const text = ref('')
 // 普通确认框
 const handleConfirm = () => {

@@ -4,6 +4,7 @@
       <n-dialog-provider>
         <n-message-provider :placement="Placement">
           <n-modal-provider>
+            <!-- 写一个layout组件 把 router-view 包裹 -->
             <router-view></router-view>
           </n-modal-provider>
         </n-message-provider>
