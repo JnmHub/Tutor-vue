@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 export const useUserStore = defineStore("user", () => {
   const token = ref(localStorage.getItem("token") || "");
   const role = ref(localStorage.getItem("role") || "");
-  const userInfo = ref(localStorage.getItem("userInfo") || "");
+  const userInfo = ref(localStorage.getItem("userInfo") || "{}");
   function setToken(token_: string) {
     token_ = "Bearer " + token_;
     localStorage.setItem("token", token_);

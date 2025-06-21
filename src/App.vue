@@ -1,6 +1,6 @@
 <template>
   <div class="h-full w-full" :class="theme === null ? '' : 'dark'">
-    <n-config-provider :theme="theme">
+    <n-config-provider :theme="theme" class="h-full">
       <n-dialog-provider>
         <n-message-provider :placement="Placement">
           <n-modal-provider>
