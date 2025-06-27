@@ -2,9 +2,8 @@ import axios from "axios";
 import type { AxiosInstance } from "axios";
 import { useStoreHook } from "@/hooks/useStoreHook";
 import { useDiscreteHook } from "@/hooks/useDiscreteHook";
-const {user:useUserStore} = useStoreHook()
-const {message,dialog} = useDiscreteHook()
-
+const { user: useUserStore } = useStoreHook();
+const { message, dialog } = useDiscreteHook();
 // 创建axios实例
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -15,7 +14,6 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-
     if (!config.headers) {
       throw new Error(
         `Expected 'config' and 'config.headers' not to be undefined`
@@ -32,9 +30,7 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(
-  
   (response) => {
-    
     if (response.config.responseType === "blob") {
       return response;
     }
@@ -44,16 +40,16 @@ service.interceptors.response.use(
     }
     if (data.code === 104) {
       dialog.create({
-        title: '登录失效',
-        content: '您的登录账号已失效，请重新登录',
-        positiveText: '再次登录',
-        type: 'warning',
+        title: "登录失效",
+        content: "您的登录账号已失效，请重新登录",
+        positiveText: "再次登录",
+        type: "warning",
         onPositiveClick: () => {
           localStorage.removeItem("token");
           window.location.href = "/";
           return Promise.reject(new Error("登录失效"));
-        }
-      })
+        },
+      });
     } else if (data.success !== undefined && !data.success) {
       message.error(data.msg);
       return Promise.reject(new Error(data.msg));
@@ -65,7 +61,7 @@ service.interceptors.response.use(
     const data = error.response?.data;
     const code = error.response?.status;
     if (no_error) return;
-    message.error(code + ":" + (data?.msg ?? data ?? "系统错误"))
+    message.error(code + ":" + (data?.msg ?? data ?? "系统错误"));
     return Promise.reject(
       new Error(code + ":" + (data?.msg ?? data ?? "系统错误"))
     );

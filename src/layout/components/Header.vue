@@ -2,61 +2,65 @@
   <div class="header-container">
     <div class="left-section">
       <n-icon size="24" class="hamburger" @click="toggleDrawer">
-        <MenuOutline/>
+        <MenuOutline />
       </n-icon>
       <div class="breadcrumb-section">
-      <n-breadcrumb>
-        <n-breadcrumb-item v-for="item in breadcrumbs" :key="item.path" separator=">">
-          <div class="flex-center">
-            <n-icon v-if="item.meta.icon" class="breadcrumb-icon">
-            <component :is="item.meta.icon"/>
-          </n-icon>
-          {{ item.meta.title }}
-          </div>
-        </n-breadcrumb-item>
-      </n-breadcrumb>
+        <n-breadcrumb>
+          <n-breadcrumb-item
+            v-for="item in breadcrumbs"
+            :key="item.path"
+            separator=">"
+          >
+            <div class="flex-center">
+              <n-icon v-if="item.meta.icon" class="breadcrumb-icon">
+                <component :is="item.meta.icon" />
+              </n-icon>
+              {{ item.meta.title }}
+            </div>
+          </n-breadcrumb-item>
+        </n-breadcrumb>
+      </div>
     </div>
-    </div>
-
-    
 
     <div class="right-section">
-      <n-space align="center" :size="20">
-        <n-tooltip trigger="hover">
-          <template #trigger>
-            <n-icon size="20" @click="toggleFullScreen">
-              <ExpandOutline v-if="!isFullscreen"/>
-              <ContractOutline v-else/>
-            </n-icon>
-          </template>
-          {{ isFullscreen ? '退出全屏' : '全屏' }}
-        </n-tooltip>
+      <n-tooltip trigger="hover">
+        <template #trigger>
+          <n-icon size="20" @click="toggleFullScreen">
+            <ExpandOutline v-if="!isFullscreen" />
+            <ContractOutline v-else />
+          </n-icon>
+        </template>
+        {{ isFullscreen ? "退出全屏" : "全屏" }}
+      </n-tooltip>
 
-        <n-tooltip trigger="hover">
-          <template #trigger>
-            <n-icon size="20" @click="toggleTheme">
-              <SunnyOutline v-if="isDark"/>
-              <MoonOutline v-else/>
-            </n-icon>
-          </template>
-          切换{{ isDark ? '亮色' : '暗色' }}主题
-        </n-tooltip>
+      <n-tooltip trigger="hover">
+        <template #trigger>
+          <n-icon size="20" @click="toggleTheme($event)" ref="changeTheme">
+            <SunnyOutline v-if="isDark" />
+            <MoonOutline v-else />
+          </n-icon>
+        </template>
+        切换{{ isDark ? "亮色" : "暗色" }}主题
+      </n-tooltip>
 
-        <n-dropdown trigger="hover" :options="userOptions" @select="handleUserSelect">
-          <n-avatar
-              round
-              size="medium"
-              src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
-          />
-        </n-dropdown>
-      </n-space>
+      <n-dropdown
+        trigger="hover"
+        :options="userOptions"
+        @select="handleUserSelect"
+      >
+        <n-avatar
+          round
+          size="medium"
+          src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+        />
+      </n-dropdown>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue';
-import {useRoute, useRouter} from 'vue-router';
+import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import {
   MenuOutline,
   ExpandOutline,
@@ -64,27 +68,27 @@ import {
   SunnyOutline,
   MoonOutline,
   LogOutOutline,
-  KeyOutline
-} from '@vicons/ionicons5';
-import {themeOption, theme} from '@/hooks/useConfigHook';
-import {useStoreHook} from '@/hooks/useStoreHook';
-import {NIcon} from "naive-ui"
-import {useMessageHook} from "@/hooks/useMessageHooks.ts";
+  KeyOutline,
+} from "@vicons/ionicons5";
+import { themeOption, theme } from "@/hooks/useConfigHook";
+import { useStoreHook } from "@/hooks/useStoreHook";
+import { NIcon } from "naive-ui";
+import { useMessageHook } from "@/hooks/useMessageHooks.ts";
 
-const emit = defineEmits(['toggle-drawer']);
-const {info} = useMessageHook();
+const emit = defineEmits(["toggle-drawer"]);
+const { info } = useMessageHook();
 const route = useRoute();
 const router = useRouter();
-const {setDark, setLight} = themeOption();
+const { setDark, setLight } = themeOption();
 const userStore = useStoreHook().user();
-
+const changeThemeRef = ref<HTMLDivElement>();
 
 const isFullscreen = ref(document.fullscreenElement !== null);
-const isDark = computed(() => theme.value?.name === 'dark');
+const isDark = computed(() => theme.value?.name === "dark");
 
 // 面包屑数据
 const breadcrumbs = computed(() => {
-  return route.matched.filter(item => item.meta && item.meta.title);
+  return route.matched.filter((item) => item.meta && item.meta.title);
 });
 
 // 切换全屏
@@ -101,41 +105,63 @@ const toggleFullScreen = () => {
 };
 
 // 切换主题
-const toggleTheme = () => {
-  if (isDark.value) {
-    setLight();
-  } else {
-    setDark();
-  }
+const toggleTheme = (e: MouseEvent) => {
+  const x = e.clientX;
+  const y = e.clientY;
+  const targetRadius = Math.hypot(Math.max(x,window.innerWidth - x),Math.max(y,window.innerHeight - y));
+  let clipPath: string[] = []
+  const transiton = document.startViewTransition(() => {
+    if (isDark.value) {
+      clipPath = [`circle(${targetRadius}px at ${x}px ${y}px)`, `circle(0px at ${x}px ${y}px)`]
+      setLight();
+    } else {
+      clipPath = [`circle(0% at ${x}px ${y}px)`, `circle(${targetRadius}px at ${x}px ${y}px)`]
+      setDark();
+    }
+  });
+  transiton.ready.then(()=>{
+    document.documentElement.animate({
+      clipPath:[`circle(0% at ${x}px ${y}px)`, `circle(${targetRadius}px at ${x}px ${y}px)`]
+    }, {
+      duration: 800,
+      pseudoElement: '::view-transition-new(root)'
+    });
+  })
 };
-
+// const toggleTheme = (e:MouseEvent) => {
+//   if (isDark.value) {
+//       setLight();
+//     } else {
+//       setDark();
+//     }
+// }
 // 用户下拉菜单
 const userOptions = [
   {
-    label: '修改密码',
-    key: 'changePassword',
-    icon: () => h(NIcon, null, {default: () => h(KeyOutline)})
+    label: "修改密码",
+    key: "changePassword",
+    icon: () => h(NIcon, null, { default: () => h(KeyOutline) }),
   },
   {
-    label: '退出登录',
-    key: 'logout',
-    icon: () => h(NIcon, null, {default: () => h(LogOutOutline)})
-  }
+    label: "退出登录",
+    key: "logout",
+    icon: () => h(NIcon, null, { default: () => h(LogOutOutline) }),
+  },
 ];
 
 const handleUserSelect = (key: string) => {
-  if (key === 'logout') {
+  if (key === "logout") {
     userStore.logout();
-    router.push('/login');
+    router.push("/login");
   } else {
     // 提示功能待开发
-    info('功能待开发');
+    info("功能待开发");
   }
 };
 
 const toggleDrawer = () => {
-  emit('toggle-drawer');
-}
+  emit("toggle-drawer");
+};
 </script>
 
 <style scoped>
@@ -147,9 +173,12 @@ const toggleDrawer = () => {
   padding: 0 20px;
 }
 
-.left-section, .breadcrumb-section, .right-section {
+.left-section,
+.breadcrumb-section,
+.right-section {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 .left-section {

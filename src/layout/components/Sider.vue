@@ -13,7 +13,7 @@
 import { ref, computed, h } from 'vue';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
 import type { MenuOption } from 'naive-ui';
-import { dynamicRoutes } from '@/router/modules/dynamicRoutes';
+import { dynamicRoutes,siderRoutes } from '@/router/modules/dynamicRoutes';
 
 defineProps({
   collapsed: {
@@ -80,7 +80,7 @@ const generateMenuOptions = (routes: any[]): MenuOption[] => {
   return options;
 };
 
-const menuOptions = ref(generateMenuOptions(dynamicRoutes));
+const menuOptions = ref(generateMenuOptions(siderRoutes('',dynamicRoutes)));
 
 // 当前激活的菜单项
 const activeKey = computed(() => route.path);

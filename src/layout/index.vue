@@ -9,7 +9,6 @@
       >
         <div class="logo-section-drawer">
           <img src="@/assets/logo.svg" alt="logo" class="logo-img"/>
-          <!-- <h1 class="logo-title">My Admin</h1> -->
         </div>
         <LayoutSider/>
       </n-layout-sider>
@@ -33,18 +32,16 @@
     
 
 
-    <n-layout >
+    <n-layout>
       <n-layout-header bordered class="layout-header">
       <LayoutHeader @toggle-drawer="isDrawerActive = true"/>
     </n-layout-header>
-      <n-layout class="content-layout" :native-scrollbar="false" content-class="content-flex">
-        <n-layout-content class="layout-content"  :native-scrollbar="false" content-class="h-full">
-          <LayoutContent/>
-        </n-layout-content>
-        <n-layout-footer bordered class="layout-footer" >
-          <LayoutFooter/>
-        </n-layout-footer>
-      </n-layout>
+      <div class="content-layout content-flex" >
+        <TabsView />
+        <div class="layout-content"  >
+            <LayoutContent/>
+        </div>
+      </div>
 
     </n-layout>
   </n-layout>
@@ -55,7 +52,7 @@ import {ref} from 'vue';
 import LayoutHeader from './components/Header.vue';
 import LayoutSider from './components/Sider.vue';
 import LayoutContent from './components/Content.vue';
-import LayoutFooter from './components/Footer.vue';
+import TabsView from './components/TabsView.vue';
 
 const collapsed = ref(false);
 const isDrawerActive = ref(false);
@@ -71,26 +68,30 @@ const isDrawerActive = ref(false);
 
 .content-layout{
   height: calc(100% - 64px);
+  overflow: hidden;
+  background-color: var(--jnm-content-color);
+  transition: var(--jnm-naive-transition);
 }
 .layout-header {
   height: 64px;
 }
 
 .layout-content {
-  background-color: #f0f2f5;
-  padding: 10px;
-  flex-grow: 1; /* 关键：让内容区撑满剩余空间 */
+  background-color: var(--jnm-content-color);
+  padding: 0 10px 0 10px;
+  flex-grow: 1; 
   overflow-y: auto; /* 内容溢出时滚动 */
+  display: flex;
+  margin-bottom: 10px;
+  transition: var(--jnm-naive-transition);
 }
 
-.dark .layout-content {
-  background-color: #101014;
-}
+
 
 .layout-footer {
   width: 100%;
   flex-shrink: 0; /* 防止页脚被压缩 */
-  align-self: flex-end;
+  /* align-self: flex-end; */
 }
 
 .desktop-sider {

@@ -11,6 +11,7 @@
   color: #888;
   font-size: 11px;
   height: 52px;
+  align-self: flex-end;
 }
 .footer-container a {
   color: #888;

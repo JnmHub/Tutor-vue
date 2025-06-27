@@ -1,11 +1,13 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
-
+  <div>
+    <pre style="overflow: auto">{{ themeVars }}</pre>
+  </div>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<script setup lang="ts" name="SystemRole">
+import { useThemeVars } from "naive-ui";
+import { defineComponent } from "vue";
+const http = useHttpHook();
+const themeVars = useThemeVars();
+http.post("/adasd");
+</script>

@@ -2,10 +2,12 @@ import type { GlobalTheme } from 'naive-ui'
 import { darkTheme,useOsTheme } from 'naive-ui'
 import { ref,watch } from 'vue'
 const osTheme = useOsTheme()
-const theme_local = localStorage.getItem('theme')
-export const theme = ref<GlobalTheme | null>(theme_local === 'dark' ? darkTheme : null)
+console.log(osTheme.value);
 
+const theme_local = localStorage.getItem('theme')
+export const theme = ref<GlobalTheme | null >(theme_local === 'dark' ? darkTheme : null)
 watch(osTheme,(newVal) => {
+    if(theme_local)return
     if(newVal === 'dark'){
         theme.value = darkTheme
     }else{
