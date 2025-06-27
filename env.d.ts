@@ -1,1 +1,6 @@
 /// <reference types="vite/client" />
+
+// 扩展 ImportMeta 接口
+interface ImportMeta {
+  readonly env: Record<string, any>
+}
