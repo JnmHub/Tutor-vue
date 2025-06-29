@@ -7,8 +7,8 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
-  const Placement: typeof import('./src/hooks/useMessageHooks')['Placement']
-  const changeTheme: typeof import('./src/hooks/useConfigHook')['changeTheme']
+  const Placement: typeof import('./src/hooks/message-dialog/useMessageHooks')['Placement']
+  const changeTheme: typeof import('./src/hooks/config/useConfigHook')['changeTheme']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
   const customRef: typeof import('vue')['customRef']
@@ -48,8 +48,8 @@ declare global {
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
-  const theme: typeof import('./src/hooks/useConfigHook')['theme']
-  const themeOption: typeof import('./src/hooks/useConfigHook')['themeOption']
+  const theme: typeof import('./src/hooks/config/useConfigHook')['theme']
+  const themeOption: typeof import('./src/hooks/config/useConfigHook')['themeOption']
   const toRaw: typeof import('vue')['toRaw']
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
@@ -60,20 +60,22 @@ declare global {
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
   const useDialog: typeof import('naive-ui')['useDialog']
-  const useDialogHook: typeof import('./src/hooks/useDialogHook')['useDialogHook']
-  const useDiscreteHook: typeof import('./src/hooks/useDiscreteHook')['useDiscreteHook']
-  const useHttpHook: typeof import('./src/hooks/useHttpHook')['useHttpHook']
+  const useDialogHook: typeof import('./src/hooks/message-dialog/useDialogHook')['useDialogHook']
+  const useDiscreteHook: typeof import('./src/hooks/message-dialog/useDiscreteHook')['useDiscreteHook']
+  const useHttpHook: typeof import('./src/hooks/http/useHttpHook')['useHttpHook']
   const useId: typeof import('vue')['useId']
   const useLoadingBar: typeof import('naive-ui')['useLoadingBar']
   const useMessage: typeof import('naive-ui')['useMessage']
-  const useMessageHook: typeof import('./src/hooks/useMessageHooks')['useMessageHook']
+  const useMessageHook: typeof import('./src/hooks/message-dialog/useMessageHooks')['useMessageHook']
   const useModel: typeof import('vue')['useModel']
   const useNotification: typeof import('naive-ui')['useNotification']
   const useSlots: typeof import('vue')['useSlots']
-  const useStore: typeof import('./src/hooks/useStoreHook')['useStore']
-  const useStoreHook: typeof import('./src/hooks/useStoreHook')['useStoreHook']
+  const useStorageManager: typeof import('./src/hooks/storage/useStorageManager')['useStorageManager']
+  const useStore: typeof import('./src/hooks/sotre/useStoreHook')['useStore']
+  const useStoreHook: typeof import('./src/hooks/sotre/useStoreHook')['useStoreHook']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
-  const useTheme: typeof import('./src/hooks/useConfigHook')['useTheme']
+  const useTheme: typeof import('./src/hooks/config/useConfigHook')['useTheme']
+  const useWindowWidth: typeof import('./src/hooks/window/useWindowHook')['useWindowWidth']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']
@@ -85,6 +87,6 @@ declare global {
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
-  export type { DialogConfirmType } from './src/hooks/useDialogHook'
-  import('./src/hooks/useDialogHook')
+  export type { DialogConfirmType } from './src/hooks/message-dialog/useDialogHook'
+  import('./src/hooks/message-dialog/useDialogHook')
 }

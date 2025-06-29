@@ -1,70 +1,70 @@
 /* src/assets/base.css */
-:root{
-  --n-bezier: cubic-bezier(.4, 0, .2, 1);
+@import 'tailwindcss';
+:root {
+    --n-bezier: cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* :root 选择器定义了全局范围的变量，这里是默认（亮色）模式下的值 */
 :root {
-  --jnm-tab-color: #fff;
-  --n-item-text-color-active: #18a058;
-  --n-item-color-active:rgba(24, 160, 88, 0.1);
-  --jnm-content-color:#f0f2f5;
-  --jnm-naive-transition:  box-shadow .3s var(--n-bezier), background-color .3s var(--n-bezier), color .3s var(--n-bezier);
+    --jnm-tab-color: #fff;
+    --n-item-text-color-active: #18a058;
+    --n-item-color-active: rgba(24, 160, 88, 0.1);
+    --jnm-content-color: #f0f2f5;
+    --jnm-naive-transition: box-shadow 0.3s var(--n-bezier), background-color 0.3s var(--n-bezier),
+        color 0.3s var(--n-bezier);
 }
 
 /* 当 .dark 类被添加到高层元素时，这些变量会覆盖 :root 中的默认值 */
 .dark {
-  --jnm-tab-color: rgb(24, 24, 28);
-  --jnm-content-color:#101014;
+    --jnm-tab-color: rgb(24, 24, 28);
+    --jnm-content-color: #101014;
 }
-::view-transition-new(root){
-  animation: none;
+::view-transition-new(root) {
+    animation: none;
 }
-::view-transition-old(root){
-  animation: none;
+::view-transition-old(root) {
+    animation: none;
 }
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 *::-webkit-scrollbar {
-  display: none; /* 隐藏滚动条 */
+    display: none; /* 隐藏滚动条 */
 }
 html,
 body,
 #app {
-  height: 100%;
+    height: 100%;
 }
 .h-full {
-  height: 100%;
+    height: 100%;
 }
-.h-99{
-  height: 99%;
+.h-99 {
+    height: 99%;
 }
-.min-h-full{
-  min-height: 100%;
+.min-h-full {
+    min-height: 100%;
 }
 .w-full {
-  width: 100%;
+    width: 100%;
 }
-.flex-1{
-  flex: 1;
+.flex-1 {
+    flex: 1;
 }
-.dark{
-  background-color: #101014;
+.dark {
+    background-color: #101014;
 }
-.n-layout-scroll-container{
-  width: 100%;
+.n-layout-scroll-container {
+    width: 100%;
 }
 .content-flex {
-  display: flex;
-  flex-direction: column;
-  /* height: 100%; */
+    display: flex;
+    flex-direction: column;
+    /* height: 100%; */
 }
-.flex-center{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-

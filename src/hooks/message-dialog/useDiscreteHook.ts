@@ -1,20 +1,20 @@
-import { Placement } from "@/hooks/useMessageHooks";
-import { createDiscreteApi,type ConfigProviderProps,darkTheme, lightTheme } from "naive-ui";
-import { computed, ref } from "vue";
-import { theme } from "./useConfigHook";
+import { Placement } from '@/hooks/message-dialog/useMessageHooks'
+import { createDiscreteApi, type ConfigProviderProps, darkTheme, lightTheme } from 'naive-ui'
+import { computed, ref } from 'vue'
+import { theme } from '../config/useConfigHook'
 
 const configProviderPropsRef = computed<ConfigProviderProps>(() => ({
-  theme: theme.value?.name === 'dark' ? darkTheme : lightTheme
+    theme: theme.value?.name === 'dark' ? darkTheme : lightTheme
 }))
-const { message,dialog,notification,loadingBar,modal } = createDiscreteApi(
+const { message, dialog, notification, loadingBar, modal } = createDiscreteApi(
     ['message', 'dialog', 'notification', 'loadingBar', 'modal'],
     {
-        messageProviderProps:{
-            placement:Placement.value,
+        messageProviderProps: {
+            placement: Placement.value
         },
-        configProviderProps:configProviderPropsRef
+        configProviderProps: configProviderPropsRef
     }
-  )
+)
 /**
  * 离散式UI钩子函数
  * @returns {Object} 返回离散式UI相关方法对象
@@ -24,12 +24,12 @@ const { message,dialog,notification,loadingBar,modal } = createDiscreteApi(
  * @returns {Function} loadingBar - 显示加载条的方法
  * @returns {Function} modal - 显示模态框的方法
  */
-export function useDiscreteHook(){
+export function useDiscreteHook() {
     return {
         message,
         dialog,
         notification,
         loadingBar,
-        modal,
+        modal
     }
 }
