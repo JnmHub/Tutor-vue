@@ -35,7 +35,7 @@ const show = ref(false)
 const openDrawer = () => {
     show.value = true
 }
-const { windowWidth } = useWindowWidth()
+
 const drawerWidth = computed(() => {
     if (windowWidth.value > 768) {
         return 300

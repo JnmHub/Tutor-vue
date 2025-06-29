@@ -42,8 +42,6 @@ watch(
         }
         timer.value = setTimeout(() => {
             showSpinner.value = true
-            if (showSpinner.value) {
-            }
         }, props.minLoadingTime)
     },
     {
@@ -56,7 +54,7 @@ watch(
     <div
         :class="
             cn(
-                'z-100 dark:bg-overlay bg-overlay-content pointer-events-none absolute left-0 top-0 flex size-full flex-col items-center justify-center transition-all duration-500',
+                'z-100 gap-2 dark:bg-overlay bg-overlay-content pointer-events-none absolute left-0 top-0 flex size-full flex-col items-center justify-center transition-all duration-500',
                 {
                     'invisible opacity-0': !showSpinner
                 },
@@ -73,7 +71,9 @@ watch(
             ></i>
         </span>
 
-        <div v-if="text" class="mt-4 text-xs">{{ text }}</div>
+        <n-gradient-text v-if="text" type="info">
+            {{ text }}
+        </n-gradient-text>
     </div>
 </template>
 

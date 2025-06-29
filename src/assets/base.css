@@ -68,3 +68,7 @@ body,
     justify-content: center;
     align-items: center;
 }
+.n-scrollbar-content {
+    min-height: 100%;
+    width: 100%;
+}

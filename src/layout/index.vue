@@ -58,18 +58,18 @@ const isDrawerActive = ref(false)
 }
 
 .content-layout {
-    height: calc(100% - 64px);
+    height: calc(100% - 50px);
     overflow: hidden;
     background-color: var(--jnm-content-color);
     transition: var(--jnm-naive-transition);
 }
 .layout-header {
-    height: 64px;
+    height: 50px;
 }
 
 .layout-content {
     background-color: var(--jnm-content-color);
-    padding: 0 10px 0 10px;
+    padding: 0 0 0 10px;
     flex-grow: 1;
     overflow-y: auto; /* 内容溢出时滚动 */
     display: flex;
