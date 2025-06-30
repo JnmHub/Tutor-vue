@@ -1,11 +1,16 @@
 <template>
-    <div class="style-example-container" :class="{ selected: selected }">
-        <div class="left" :style="backgroundStyle.left"></div>
-        <div class="right">
-            <div class="right-top" :style="backgroundStyle.rightTop"></div>
-            <div class="right-bottom" :style="backgroundStyle.rightBottom"></div>
+    <div>
+        <div class="style-example-container">
+            <div class="left" :style="backgroundStyle.left"></div>
+            <div class="right">
+                <div class="right-top" :style="backgroundStyle.rightTop"></div>
+                <div class="right-bottom" :style="backgroundStyle.rightBottom"></div>
+            </div>
         </div>
-        <div style="font-size: 12px; text-align: center">
+        <div
+            style="font-size: 12px; text-align: center; margin-top: 10px"
+            :class="{ selected: selected }"
+        >
             {{ backgroundStyle.name }}
         </div>
     </div>
@@ -39,6 +44,18 @@ const backgroundStyles = {
         name: '暗黑',
         left: {
             background: '0% 0% / cover rgb(0, 0, 0)'
+        },
+        rightTop: {
+            background: 'rgb(0, 0, 0)'
+        },
+        rightBottom: {
+            background: 'rgb(51, 51, 51)'
+        }
+    },
+    system: {
+        name: '跟随系统',
+        left: {
+            background: '0% 0% / cover rgb(255, 255, 255)'
         },
         rightTop: {
             background: 'rgb(0, 0, 0)'
@@ -89,7 +106,7 @@ const backgroundStyle = computed(() => {
     display: block;
     width: 8px;
     height: 8px;
-    background-color: rgb(3, 190, 50);
+    background-color: var(--color-primary);
     text-align: center;
     margin: 5px auto 0px;
     border-radius: 50%;

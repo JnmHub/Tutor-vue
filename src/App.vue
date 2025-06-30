@@ -1,8 +1,8 @@
 <template>
-    <div class="h-full w-full" :class="theme === null ? '' : 'dark'">
+    <div class="h-full w-full" :class="theme_?.name === 'dark' ? 'dark' : ''">
         <n-config-provider
             :theme-overrides="themeOverrides"
-            :theme="theme"
+            :theme="theme_"
             class="h-full"
             inline-theme-disabled
         >
@@ -18,30 +18,40 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { Placement } from '@/hooks/message-dialog/useMessageHooks'
-import { theme } from './hooks/config/useConfigHook'
 import { NConfigProvider, type GlobalThemeOverrides } from 'naive-ui'
-
+import { generate } from '@ant-design/colors'
+const color = ref(generate(preferences.theme.primaryColor))
+const theme_ = computed(() => theme.value)
+const Placement = computed(() => preferences.option.message.placement)
+watch(
+    () => preferences.theme.primaryColor,
+    newValue => {
+        color.value = generate(newValue)
+    }
+)
 /**
  * js 文件下使用这个做类型提示
  * @type import('naive-ui').GlobalThemeOverrides
  */
-const themeOverrides: GlobalThemeOverrides = {
-    common: {
-        primaryColor: '#FF0000',
-        primaryColorHover: '#FF0000',
-        primaryColorSuppl: '#FF0000'
-    },
-    Button: {
-        textColor: '#FF0000'
-    },
-    Select: {
-        peers: {
-            InternalSelection: {
-                textColor: '#FF0000'
+const themeOverrides = computed<GlobalThemeOverrides>(() => {
+    return {
+        common: {
+            primaryColor: color.value[5], // 主色取第6个颜色，和传入的颜色一致
+            primaryColorHover: color.value[4], // Hover和Suppl颜色一样，取第5个颜色
+            primaryColorSuppl: color.value[4], // Hover和Suppl颜色一样，取第5个颜色
+            primaryColorPressed: color.value[6] // 比主色深一档，取第7个颜色
+        },
+        Button: {
+            textColor: color.value[5]
+        },
+        Select: {
+            peers: {
+                InternalSelection: {
+                    textColor: color.value[5]
+                }
             }
         }
+        // ...
     }
-    // ...
-}
+})
 </script>

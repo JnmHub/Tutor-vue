@@ -8,7 +8,9 @@
                 <LayoutSider />
             </n-layout-sider>
         </n-drawer>
+
         <n-layout-sider
+            style="--n-color: #333"
             bordered
             show-trigger
             collapse-mode="width"
@@ -20,7 +22,16 @@
         >
             <div class="logo-section-drawer">
                 <img src="@/assets/logo.svg" alt="logo" class="logo-img" />
-                <h1 class="logo-title" v-show="!collapsed">My Admin</h1>
+                <h1
+                    class="logo-title whitespace-nowrap transition-opacity duration-300 ease-in-out"
+                    :class="{
+                        'opacity-0': collapsed,
+                        'opacity-100': !collapsed
+                    }"
+                    v-show="!collapsed"
+                >
+                    My Admin
+                </h1>
             </div>
             <LayoutSider :collapsed="collapsed" />
         </n-layout-sider>

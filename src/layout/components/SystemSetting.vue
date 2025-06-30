@@ -4,20 +4,41 @@
             <n-space vertical>
                 <div>
                     <n-divider> 主题设置 </n-divider>
-                    <n-grid :cols="2" :gap="12"> </n-grid>
-                    <n-grid x-gap="12" :cols="2">
+
+                    <n-grid x-gap="12" :cols="3">
                         <n-gi>
                             <ThemeSetting
                                 theme="light"
-                                :selected="!isDark"
+                                :selected="theme_local == 'light'"
                                 @click="changeTheme($event, 'light')"
                             />
                         </n-gi>
                         <n-gi>
                             <ThemeSetting
                                 theme="dark"
-                                :selected="isDark"
+                                :selected="theme_local == 'dark'"
                                 @click="changeTheme($event, 'dark')"
+                            />
+                        </n-gi>
+                        <n-gi>
+                            <ThemeSetting
+                                theme="system"
+                                :selected="theme_local === 'system'"
+                                @click="changeTheme($event, 'system')"
+                            />
+                        </n-gi>
+                    </n-grid>
+                </div>
+            </n-space>
+            <n-space vertical>
+                <div>
+                    <n-divider> 颜色设置 </n-divider>
+                    <n-grid x-gap="12" :cols="6">
+                        <n-gi v-for="value in colors" :key="value">
+                            <ColorSetting
+                                :color="value"
+                                :selected="nowColor === value"
+                                @click="setColor(value)"
                             />
                         </n-gi>
                     </n-grid>
@@ -28,14 +49,18 @@
 </template>
 
 <script setup lang="ts">
+import ColorSetting from './SystemSetting/ColorSetting.vue'
 import ThemeSetting from './SystemSetting/ThemeSetting.vue'
-const { setDark, setLight } = themeOption()
+const { setDark, setLight, setSystem } = themeOption()
+const { setColor } = useColor()
 const isDark = computed(() => theme.value?.name === 'dark')
+const theme_local = computed(() => preferences.theme.local)
 const show = ref(false)
 const openDrawer = () => {
     show.value = true
 }
-
+const nowColor = computed(() => preferences.theme.primaryColor)
+const colors = Object.values(preferences.themeOption)
 const drawerWidth = computed(() => {
     if (windowWidth.value > 768) {
         return 300
@@ -52,8 +77,10 @@ const changeTheme = (e: MouseEvent, theme: string) => {
     const transiton = document.startViewTransition(() => {
         if (theme === 'light') {
             setLight()
-        } else {
+        } else if (theme === 'dark') {
             setDark()
+        } else {
+            setSystem()
         }
     })
     transiton.ready.then(() => {

@@ -1,5 +1,7 @@
 <script>
-    const theme = localStorage.getItem('theme')
+    const primaryColor = localStorage.getItem('-preferences')
+    const theme = JSON.parse(primaryColor).value.theme.local
+
     if (theme === 'dark') {
         document.documentElement.classList.remove('light')
         document.documentElement.classList.add('dark')
@@ -7,6 +9,11 @@
         document.documentElement.classList.remove('dark')
         document.documentElement.classList.add('light')
     }
+
+    document.documentElement.style.setProperty(
+        '--color-primary',
+        JSON.parse(primaryColor).value.theme.primaryColor
+    )
 </script>
 <style data-app-loading="inject-css">
     html {
@@ -66,7 +73,7 @@
         width: 48px;
         height: 5px;
         content: '';
-        background: hsl(var(--primary, 210 100% 50%) / 50%);
+        background: var(--color-primary);
         border-radius: 50%;
         animation: shadow-ani 0.5s linear infinite;
     }
@@ -78,7 +85,7 @@
         width: 100%;
         height: 100%;
         content: '';
-        background: hsl(var(--primary, 210 100% 50%));
+        background: var(--color-primary);
         border-radius: 4px;
         animation: jump-ani 0.5s linear infinite;
     }

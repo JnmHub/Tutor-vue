@@ -1,7 +1,5 @@
 @import './base.css';
 @import './transition.css';
-@import './theme/default.css';
-@import './theme/dark.css';
 
 a,
 .green {

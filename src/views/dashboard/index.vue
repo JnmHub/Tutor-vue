@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
     <div style="width: 100%; height: 100%" :style="{ height: height }">
-        <div style="width: 100%; height: 100%; background-color: aqua"></div>
+        <div style="width: 100%; height: 100%" class="bg-primary"></div>
         <div style="width: 100%; height: 100%; background-color: #ccc"></div>
     </div>
 </template>

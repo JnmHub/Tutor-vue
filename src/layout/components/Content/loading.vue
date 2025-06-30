@@ -66,14 +66,13 @@ watch(
             <i
                 v-for="index in 4"
                 :key="index"
-                class="absolute block size-4 origin-[50%_50%] scale-75 rounded-full opacity-30"
-                style="background-color: #006ce6"
+                class="absolute block size-4 origin-[50%_50%] scale-75 rounded-full opacity-30 bg-primary"
             ></i>
         </span>
 
-        <n-gradient-text v-if="text" type="info">
+        <div v-if="text" class="text-primary">
             {{ text }}
-        </n-gradient-text>
+        </div>
     </div>
 </template>
 

@@ -78,7 +78,7 @@ watch(
     width: 48px;
     height: 5px;
     content: '';
-    background: hsl(var(--primary, 210 100% 50%) / 50%);
+    background: var(--color-primary);
     border-radius: 50%;
     animation: shadow-ani 0.5s linear infinite;
 }
@@ -90,7 +90,7 @@ watch(
     width: 100%;
     height: 100%;
     content: '';
-    background: hsl(var(--primary, 210 100% 50%));
+    background: var(--color-primary);
     border-radius: 4px;
     animation: jump-ani 0.5s linear infinite;
 }

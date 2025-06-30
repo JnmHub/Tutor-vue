@@ -36,6 +36,16 @@ export const dynamicRoutes = [
         }
     },
     {
+        path: '/demo',
+        name: 'demo',
+        component: () => import('@/views/HomeView.vue'),
+        meta: {
+            title: '测试',
+            showInMenu: true,
+            requiresLayout: true
+        }
+    },
+    {
         path: '/system',
         name: 'System',
         meta: {

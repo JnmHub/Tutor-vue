@@ -1,8 +1,6 @@
-import { Placement } from '@/hooks/message-dialog/useMessageHooks'
 import { createDiscreteApi, type ConfigProviderProps, darkTheme, lightTheme } from 'naive-ui'
 import { computed, ref } from 'vue'
-import { theme } from '../config/useConfigHook'
-
+const Placement = toRef(preferences.option.message, 'placement') // 使用toRef 保持关联
 const configProviderPropsRef = computed<ConfigProviderProps>(() => ({
     theme: theme.value?.name === 'dark' ? darkTheme : lightTheme
 }))
@@ -10,7 +8,8 @@ const { message, dialog, notification, loadingBar, modal } = createDiscreteApi(
     ['message', 'dialog', 'notification', 'loadingBar', 'modal'],
     {
         messageProviderProps: {
-            placement: Placement.value
+            placement: Placement.value,
+            closable: true
         },
         configProviderProps: configProviderPropsRef
     }
