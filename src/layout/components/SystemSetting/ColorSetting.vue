@@ -1,20 +1,29 @@
 <template>
-    <div
-        class="color-wrapper"
-        v-if="color"
-        :class="{ selected: selected }"
-        :style="{ 'background-color': color }"
-    ></div>
+    <div>
+        <n-tooltip placement="top" trigger="hover">
+            <template #trigger>
+                <div
+                    class="color-wrapper"
+                    v-if="color"
+                    :class="{ selected: selected }"
+                    :style="{ 'background-color': color }"
+                ></div>
+            </template>
+            <span> {{ text }}</span>
+        </n-tooltip>
+    </div>
 </template>
 
 <script setup lang="ts">
 interface Props {
     selected: boolean
     color: string
+    text: string
 }
 withDefaults(defineProps<Props>(), {
     selected: false,
-    color: ''
+    color: '',
+    text: ''
 })
 </script>
 

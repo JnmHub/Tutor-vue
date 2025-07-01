@@ -1,9 +1,7 @@
 <template>
     <div>
         <n-button @click="getData">获取</n-button>
-        <span style="overflow: auto">{{ themeVars }}</span>
-        <span style="overflow: auto">{{ themeVars }}</span>
-        <span style="overflow: auto">{{ themeVars }}</span>
+        <pre style="overflow: auto">{{ themeVars }}</pre>
     </div>
 </template>
 

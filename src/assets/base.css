@@ -2,12 +2,16 @@
 @import 'tailwindcss';
 @theme {
     --color-primary: #18a058;
+    --sider-bac-color: rgb(240, 240, 240);
+    --sider-text-color: #000;
+    --color-accent: var(--accent-color);
 }
 :root {
     --n-bezier: cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* :root 选择器定义了全局范围的变量，这里是默认（亮色）模式下的值 */
 :root {
+    --accent-color: hsl(240 5% 96%);
     --jnm-tab-color: #fff;
     --n-item-text-color-active: #18a058;
     --n-item-color-active: rgba(24, 160, 88, 0.1);
@@ -18,6 +22,7 @@
 
 /* 当 .dark 类被添加到高层元素时，这些变量会覆盖 :root 中的默认值 */
 .dark {
+    --accent-color: hsl(216 5% 19%);
     --jnm-tab-color: rgb(24, 24, 28);
     --jnm-content-color: #101014;
 }
@@ -27,11 +32,7 @@
 ::view-transition-old(root) {
     animation: none;
 }
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 *::-webkit-scrollbar {
     display: none; /* 隐藏滚动条 */
 }

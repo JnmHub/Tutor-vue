@@ -3,6 +3,10 @@ import { darkTheme, useOsTheme } from 'naive-ui'
 const osTheme = useOsTheme()
 const storage = useStorageManager()
 type ThemeLocal = 'light' | 'dark' | 'system'
+type ThemeWithoutSystem = {
+    type: 'dark' | undefined
+    name: string
+}
 type Placement = 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 const defaultPreferences = {
     transition: {
@@ -13,7 +17,15 @@ const defaultPreferences = {
     },
     theme: {
         local: 'light' as ThemeLocal,
-        primaryColor: '#18a058'
+        primaryColor: '#18a058',
+        sidebarLocal: {
+            type: 'dark',
+            name: '深色侧边栏'
+        } as ThemeWithoutSystem,
+        headerLocal: {
+            type: 'dark',
+            name: '深色顶部'
+        } as ThemeWithoutSystem
     },
     themeOption: {
         默认: '#18a058',
@@ -29,7 +41,17 @@ const defaultPreferences = {
         洋紫色: 'rgb(180, 102, 219)',
         洋粉色: 'rgb(219, 102, 180)',
         洋黄色: 'rgb(219, 219, 52)',
-        柠檬橙: 'rgb(240, 160, 52)'
+        柠檬橙: 'rgb(240, 160, 52)',
+        天黄色: 'rgb(240, 240, 102)',
+        靛蓝色: '#4B0082',
+        珊瑚橙: 'rgb(255, 127, 80)',
+        暮紫色: 'rgb(153, 102, 255)',
+        橄榄绿: 'rgb(128, 128, 0)',
+        樱粉色: 'rgb(255, 192, 203)',
+        焦糖棕: 'rgb(210, 180, 140)',
+        松石绿: 'rgb(175, 238, 238)',
+        梅子红: 'rgb(139, 0, 139)',
+        雾灰色: 'rgb(211, 211, 211)'
     } as const,
     option: {
         message: {
@@ -54,6 +76,8 @@ interface AppConfig {
     theme: {
         local: ThemeLocal
         primaryColor: ColorValue
+        sidebarLocal: ThemeWithoutSystem
+        headerLocal: ThemeWithoutSystem
     }
     themeOption: Record<ThemeName, ColorValue>
     option: {
@@ -73,6 +97,14 @@ export const theme = computed<GlobalTheme | null>(() => {
 
     document.documentElement.classList.toggle('dark', isDark)
     return isDark ? darkTheme : null
+})
+export const sidebarTheme = computed<GlobalTheme | undefined>(() => {
+    const isDark = preferences.theme.sidebarLocal.type === 'dark'
+    return isDark ? darkTheme : undefined
+})
+export const headerTheme = computed<GlobalTheme | undefined>(() => {
+    const isDark = preferences.theme.headerLocal.type === 'dark'
+    return isDark ? darkTheme : undefined
 })
 watch(
     () => preferences,

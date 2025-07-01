@@ -4,7 +4,6 @@
             <n-space vertical>
                 <div>
                     <n-divider> 主题设置 </n-divider>
-
                     <n-grid x-gap="12" :cols="3">
                         <n-gi>
                             <ThemeSetting
@@ -28,15 +27,24 @@
                             />
                         </n-gi>
                     </n-grid>
+                    <n-grid x-gap="12" :cols="1">
+                        <n-gi>
+                            <SiderHeaderSetting name="sidebarLocal" />
+                        </n-gi>
+                        <n-gi>
+                            <SiderHeaderSetting name="headerLocal" />
+                        </n-gi>
+                    </n-grid>
                 </div>
             </n-space>
             <n-space vertical>
                 <div>
                     <n-divider> 颜色设置 </n-divider>
                     <n-grid x-gap="12" :cols="6">
-                        <n-gi v-for="value in colors" :key="value">
+                        <n-gi v-for="(value, key) in colors" :key="value">
                             <ColorSetting
                                 :color="value"
+                                :text="key"
                                 :selected="nowColor === value"
                                 @click="setColor(value)"
                             />
@@ -49,6 +57,7 @@
 </template>
 
 <script setup lang="ts">
+import SiderHeaderSetting from './SystemSetting/SiderHeaderSetting.vue'
 import ColorSetting from './SystemSetting/ColorSetting.vue'
 import ThemeSetting from './SystemSetting/ThemeSetting.vue'
 const { setDark, setLight, setSystem } = themeOption()
@@ -60,7 +69,7 @@ const openDrawer = () => {
     show.value = true
 }
 const nowColor = computed(() => preferences.theme.primaryColor)
-const colors = Object.values(preferences.themeOption)
+const colors = preferences.themeOption
 const drawerWidth = computed(() => {
     if (windowWidth.value > 768) {
         return 300

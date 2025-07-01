@@ -1,45 +1,51 @@
 <template>
     <n-layout class="main-layout" has-sider>
         <n-drawer v-model:show="isDrawerActive" :width="200" placement="left">
-            <n-layout-sider bordered :width="200" :native-scrollbar="false" class="drawer-sider">
+            <n-config-provider abstract :theme="sidebarTheme_">
+                <n-layout-sider
+                    bordered
+                    :width="200"
+                    :native-scrollbar="false"
+                    class="drawer-sider"
+                >
+                    <div class="logo-section-drawer">
+                        <img src="@/assets/logo.svg" alt="logo" class="logo-img" />
+                    </div>
+                    <LayoutSider />
+                </n-layout-sider>
+            </n-config-provider>
+        </n-drawer>
+        <n-config-provider abstract :theme="sidebarTheme_">
+            <n-layout-sider
+                style="z-index: 101"
+                bordered
+                show-trigger
+                collapse-mode="width"
+                :collapsed-width="64"
+                :width="200"
+                :native-scrollbar="false"
+                v-model:collapsed="collapsed"
+                class="desktop-sider"
+            >
                 <div class="logo-section-drawer">
                     <img src="@/assets/logo.svg" alt="logo" class="logo-img" />
+                    <h1
+                        class="logo-title whitespace-nowrap transition-opacity duration-300 ease-in-out"
+                        :class="{
+                            'opacity-0': collapsed,
+                            'opacity-100': !collapsed
+                        }"
+                        v-show="!collapsed"
+                    >
+                        My Admin
+                    </h1>
                 </div>
-                <LayoutSider />
+                <LayoutSider :collapsed="collapsed" />
             </n-layout-sider>
-        </n-drawer>
-
-        <n-layout-sider
-            style="--n-color: #333"
-            bordered
-            show-trigger
-            collapse-mode="width"
-            :collapsed-width="64"
-            :width="200"
-            :native-scrollbar="false"
-            v-model:collapsed="collapsed"
-            class="desktop-sider"
-        >
-            <div class="logo-section-drawer">
-                <img src="@/assets/logo.svg" alt="logo" class="logo-img" />
-                <h1
-                    class="logo-title whitespace-nowrap transition-opacity duration-300 ease-in-out"
-                    :class="{
-                        'opacity-0': collapsed,
-                        'opacity-100': !collapsed
-                    }"
-                    v-show="!collapsed"
-                >
-                    My Admin
-                </h1>
-            </div>
-            <LayoutSider :collapsed="collapsed" />
-        </n-layout-sider>
-
+        </n-config-provider>
         <n-layout>
-            <n-layout-header bordered class="layout-header">
-                <LayoutHeader @toggle-drawer="isDrawerActive = true" />
-            </n-layout-header>
+            <LayoutHeader @toggle-drawer="isDrawerActive = true" />
+
             <div class="content-layout content-flex">
                 <TabsView />
                 <div class="layout-content">
@@ -56,9 +62,9 @@ import LayoutHeader from './components/Header.vue'
 import LayoutSider from './components/Sider.vue'
 import LayoutContent from './components/Content/Content.vue'
 import TabsView from './components/TabsView.vue'
-
 const collapsed = ref(false)
 const isDrawerActive = ref(false)
+const sidebarTheme_ = computed(() => sidebarTheme.value)
 </script>
 
 <style scoped>
@@ -73,9 +79,6 @@ const isDrawerActive = ref(false)
     overflow: hidden;
     background-color: var(--jnm-content-color);
     transition: var(--jnm-naive-transition);
-}
-.layout-header {
-    height: 50px;
 }
 
 .layout-content {

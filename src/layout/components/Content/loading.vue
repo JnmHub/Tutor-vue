@@ -54,7 +54,7 @@ watch(
     <div
         :class="
             cn(
-                'z-100 gap-2 dark:bg-overlay bg-overlay-content pointer-events-none absolute left-0 top-0 flex size-full flex-col items-center justify-center transition-all duration-500',
+                'z-100 gap-2 dark:bg-overlay bg-overlay-content absolute left-0 top-0 flex size-full flex-col items-center justify-center transition-all duration-500',
                 {
                     'invisible opacity-0': !showSpinner
                 },
@@ -62,6 +62,17 @@ watch(
             )
         "
     >
+        <!-- <div
+        :class="
+            cn(
+                'gap-2 z-100 dark:bg-overlay bg-overlay-content pointer-events-none absolute left-0 flex top-0 size-full backdrop-blur-sm flex-col items-center justify-center transition-all duration-1000',
+                {
+                    'invisible opacity-0': !showSpinner
+                },
+                props.class
+            )
+        "
+    > -->
         <span class="dot relative inline-block size-9 text-3xl">
             <i
                 v-for="index in 4"

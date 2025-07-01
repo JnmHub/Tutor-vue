@@ -1,55 +1,64 @@
 <template>
-    <div class="header-container">
-        <div class="left-section">
-            <n-icon size="24" class="hamburger" @click="toggleDrawer">
-                <MenuOutline />
-            </n-icon>
-            <div class="breadcrumb-section">
-                <n-breadcrumb>
-                    <n-breadcrumb-item v-for="item in breadcrumbs" :key="item.path" separator=">">
-                        <div class="flex-center">
-                            <n-icon v-if="item.meta.icon" class="breadcrumb-icon">
-                                <component :is="item.meta.icon" />
+    <n-config-provider abstract :theme="headerTheme_">
+        <n-layout-header bordered class="layout-header">
+            <div class="header-container">
+                <div class="left-section">
+                    <n-icon size="24" class="hamburger" @click="toggleDrawer">
+                        <MenuOutline />
+                    </n-icon>
+                    <div class="breadcrumb-section">
+                        <n-breadcrumb>
+                            <n-breadcrumb-item
+                                v-for="item in breadcrumbs"
+                                :key="item.path"
+                                separator=">"
+                            >
+                                <div class="flex-center">
+                                    <n-icon v-if="item.meta.icon" class="breadcrumb-icon">
+                                        <component :is="item.meta.icon" />
+                                    </n-icon>
+                                    {{ item.meta.title }}
+                                </div>
+                            </n-breadcrumb-item>
+                        </n-breadcrumb>
+                    </div>
+                </div>
+
+                <div class="right-section">
+                    <n-tooltip trigger="hover">
+                        <template #trigger>
+                            <n-icon size="20" @click="toggleFullScreen">
+                                <ExpandOutline v-if="!isFullscreen" />
+                                <ContractOutline v-else />
                             </n-icon>
-                            {{ item.meta.title }}
-                        </div>
-                    </n-breadcrumb-item>
-                </n-breadcrumb>
+                        </template>
+                        {{ isFullscreen ? '退出全屏' : '全屏' }}
+                    </n-tooltip>
+
+                    <n-tooltip trigger="hover">
+                        <template #trigger>
+                            <n-icon size="20" @click="openDrawer" ref="changeTheme">
+                                <Settings />
+                            </n-icon>
+                        </template>
+                        系统设置
+                    </n-tooltip>
+                    <n-dropdown trigger="hover" :options="userOptions" @select="handleUserSelect">
+                        <n-avatar
+                            round
+                            size="medium"
+                            src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+                        />
+                    </n-dropdown>
+                </div>
             </div>
-        </div>
-
-        <div class="right-section">
-            <n-tooltip trigger="hover">
-                <template #trigger>
-                    <n-icon size="20" @click="toggleFullScreen">
-                        <ExpandOutline v-if="!isFullscreen" />
-                        <ContractOutline v-else />
-                    </n-icon>
-                </template>
-                {{ isFullscreen ? '退出全屏' : '全屏' }}
-            </n-tooltip>
-
-            <n-tooltip trigger="hover">
-                <template #trigger>
-                    <n-icon size="20" @click="openDrawer" ref="changeTheme">
-                        <Settings />
-                    </n-icon>
-                </template>
-                系统设置
-            </n-tooltip>
-            <n-dropdown trigger="hover" :options="userOptions" @select="handleUserSelect">
-                <n-avatar
-                    round
-                    size="medium"
-                    src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
-                />
-            </n-dropdown>
-        </div>
-        <SystemSetting ref="themeSettingRef" />
-    </div>
+        </n-layout-header>
+    </n-config-provider>
+    <SystemSetting ref="themeSettingRef" />
 </template>
 
 <script setup lang="ts">
+const headerTheme_ = computed(() => headerTheme.value)
 import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import SystemSetting from './SystemSetting.vue'
@@ -183,7 +192,9 @@ const toggleDrawer = () => {
     vertical-align: middle;
     margin-right: 5px;
 }
-
+.layout-header {
+    height: 50px;
+}
 .n-icon {
     cursor: pointer;
 }

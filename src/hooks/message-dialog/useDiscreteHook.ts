@@ -1,5 +1,6 @@
 import { createDiscreteApi, type ConfigProviderProps, darkTheme, lightTheme } from 'naive-ui'
 import { computed, ref } from 'vue'
+
 const Placement = toRef(preferences.option.message, 'placement') // 使用toRef 保持关联
 const configProviderPropsRef = computed<ConfigProviderProps>(() => ({
     theme: theme.value?.name === 'dark' ? darkTheme : lightTheme
